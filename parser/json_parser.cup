@@ -56,8 +56,8 @@ elements ::= value:val {: List<JsonEntity> elems = new ArrayList<>(); elems.add(
 
 value ::= STRING:s  {: RESULT = new JsonValue(s); :}
         | NUMBER:n  {: RESULT = new JsonValue(n); :}
-        | object:o  {: RESULT = new JsonValue(o); :}
-        | array:a   {: RESULT = new JsonValue(a); :}
         | BOOLEAN:b {: RESULT = new JsonValue(b); :}
         | NULL      {: RESULT = new JsonValue(null); :}
+        | object:o  {: RESULT = o; :}
+        | array:a   {: RESULT = a; :}
         ;
