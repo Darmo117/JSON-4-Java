@@ -57,9 +57,12 @@ public final class JsonValue implements JsonEntity {
   /**
    * Returns an unformatted representation of this value.
    */
-  // TODO ne pas fficher le point si la valeur est entière
   @Override
   public String toString() {
+    if (this.value instanceof String)
+      return "\"" + this.value + "\"";
+    else if (this.value instanceof Double && (Double) this.value == Math.floor((Double) this.value))
+      return Integer.toString(((Double) this.value).intValue());
     return String.valueOf(this.value);
   }
 }
