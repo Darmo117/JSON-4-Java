@@ -18,4 +18,21 @@
  */
 package net.darmo_creations.json;
 
-public interface JsonBase {}
+/**
+ * Base class for JSON entities.
+ *
+ * @author Damien Vergnet
+ */
+public interface JsonEntity {
+  default boolean isObject() {
+    return false;
+  }
+
+  default boolean isArray() {
+    return false;
+  }
+
+  default boolean isValue() {
+    return false;
+  }
+}

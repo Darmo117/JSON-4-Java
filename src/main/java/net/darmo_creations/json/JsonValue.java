@@ -18,7 +18,7 @@
  */
 package net.darmo_creations.json;
 
-public final class JsonValue implements JsonBase {
+public final class JsonValue implements JsonEntity {
   private Object value;
 
   public JsonValue(Object value) {
@@ -47,5 +47,19 @@ public final class JsonValue implements JsonBase {
 
   public Class<?> getType() {
     return isNull() ? null : this.value.getClass();
+  }
+
+  @Override
+  public boolean isValue() {
+    return true;
+  }
+
+  /**
+   * Returns an unformatted representation of this value.
+   */
+  // TODO ne pas fficher le point si la valeur est entière
+  @Override
+  public String toString() {
+    return String.valueOf(this.value);
   }
 }

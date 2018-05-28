@@ -20,8 +20,9 @@ package net.darmo_creations.json;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.StringJoiner;
 
-public final class JsonArray extends ArrayList<JsonBase> implements JsonBase {
+public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity {
   private static final long serialVersionUID = -5326812842277159880L;
 
   public JsonArray() {
@@ -32,11 +33,26 @@ public final class JsonArray extends ArrayList<JsonBase> implements JsonBase {
     super(initialCapacity);
   }
 
-  public JsonArray(Collection<? extends JsonBase> c) {
+  public JsonArray(Collection<? extends JsonEntity> c) {
     super(c);
   }
 
-  public <T extends JsonBase> T getAs(int index, ObjectType<T> type) {
+  public <T extends JsonEntity> T getAs(int index, ObjectType<T> type) {
     return type.getObjectClass().cast(get(index));
+  }
+
+  @Override
+  public boolean isArray() {
+    return true;
+  }
+
+  /**
+   * Returns an unformatted representation of this value.
+   */
+  @Override
+  public String toString() {
+    StringJoiner sj = new StringJoiner(",", "[", "]");
+    forEach(e -> sj.add(e.toString()));
+    return sj.toString();
   }
 }

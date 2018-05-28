@@ -20,7 +20,7 @@ package net.darmo_creations.json;
 
 import java.io.Serializable;
 
-public final class ObjectType<T extends JsonBase> implements Serializable {
+public final class ObjectType<T extends JsonEntity> implements Serializable {
   private static final long serialVersionUID = 7068360356239378250L;
 
   public static final ObjectType<JsonObject> OBJECT = new ObjectType<>(JsonObject.class);

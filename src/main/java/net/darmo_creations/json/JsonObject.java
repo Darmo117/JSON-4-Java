@@ -20,8 +20,9 @@ package net.darmo_creations.json;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
-public final class JsonObject extends HashMap<String, JsonBase> implements JsonBase {
+public final class JsonObject extends HashMap<String, JsonEntity> implements JsonEntity {
   private static final long serialVersionUID = -1090220898175859874L;
 
   public JsonObject() {
@@ -36,11 +37,23 @@ public final class JsonObject extends HashMap<String, JsonBase> implements JsonB
     super(initialCapacity, loadFactor);
   }
 
-  public JsonObject(Map<String, ? extends JsonBase> m) {
+  public JsonObject(Map<String, ? extends JsonEntity> m) {
     super(m);
   }
 
-  public <T extends JsonBase> T getAs(String key, ObjectType<T> type) {
+  public <T extends JsonEntity> T getAs(String key, ObjectType<T> type) {
     return type.getObjectClass().cast(get(key));
+  }
+
+  @Override
+  public boolean isObject() {
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    StringJoiner sj = new StringJoiner(",", "{", "}");
+    entrySet().forEach(e -> sj.add(e.getKey() + ":" + e.getValue()));
+    return sj.toString();
   }
 }
