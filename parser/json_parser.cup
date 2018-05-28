@@ -1,0 +1,53 @@
+/*
+ * Simple JSON parser.
+ */
+
+package net.darmo_creations.json.parser;
+
+import java_cup.runtime.*;
+import net.darmo_creations.json.parser.Lexer;
+import net.darmo_creations.json.*;
+import java.utils.*;
+
+parser code {:
+  protected Lexer lexer;
+:}
+
+terminal LCURLY, RCURLY, LBRACKET, RBRACKET, COLON, COMMA;
+terminal Integer INT;
+terminal Double FLOAT;
+terminal String STRING;
+terminal Boolean BOOLEAN;
+terminal Object NULL;
+
+non terminal JsonObject object;
+non terminal JsonArray array;
+non terminal JsonValue literal_value;
+non terminal JsonBase value;
+non terminal Map<String, JsonBase> members;
+non terminal List<JsonBase> elements;
+
+object ::= LCURLY RCURLY            {: RESULT = new JsonObject(); :}
+         | LCURLY members:m RCURLY  {: RESULT = new JsonObject(m); :}
+         ;
+
+members ::= STRING:key COLON value:val {: Map<String, JsonBase> m = new HashMap<>(); m.put(key, val); RESULT = m; :}
+          | STRING:key COLON value:val COMMA members:m {: m.put(key, val); RESULT = m; :}
+          ;
+
+array ::= LBRACKET RBRACKET                 {: RESULT = new ArrayList<>(); :}
+        | LBRACKET elements:elems RBRACKET  {: RESULT = elems; :}
+        ;
+
+elements ::= value:val {: List<JsonBase> elems = new ArrayList<>(); elems.add(val); RESULT = elems; :}
+           | value:val COMMA elements:elems {: elems.add(0, val); RESULT = elems; :}
+           ;
+
+value ::= STRING:s  {: RESULT = new JsonValue(s); :}
+        | INT:i     {: RESULT = new JsonValue(i); :}
+        | FLOAT:f   {: RESULT = new JsonValue(f); :}
+        | object:o  {: RESULT = new JsonValue(o); :}
+        | array:a   {: RESULT = new JsonValue(a); :}
+        | BOOLEAN:b {: RESULT = new JsonValue(b); :}
+        | NULL:n    {: RESULT = new JsonValue(n); :}
+        ;

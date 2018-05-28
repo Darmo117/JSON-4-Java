@@ -1,0 +1,46 @@
+// Apply the java-library plugin to add support for Java Library
+apply plugin: 'java-library'
+
+version = '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
+
+// Creates the jar with all dependencies included inside
+task fatJar(type: Jar) {
+  manifest {
+    attributes 'Class-Path': '.'
+  }
+  // Packs all dependencies into the jar.
+  from {
+    configurations.compile.collect {
+      it.isDirectory() ? it : zipTree(it)
+    }
+  }
+  with jar
+  // end
+}
+
+// Creates the distributable jar
+task createZip(type: Zip) {
+  from '/'
+  include 'LICENSE' // License file if you have one
+  from 'build/libs/'
+  include rootProject.name + '-' + version + '.jar'
+  archiveName rootProject.name + '-' + version + '.zip'
+  destinationDir(file('/'))
+}
+
+// Where to find the project's dependencies
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile files('libs/jflex-1.6.1.jar')
+  compile files('libs/java-cup-11a.jar')
+  // Use JUnit test framework
+  testImplementation 'junit:junit:4.12'
+}
+
