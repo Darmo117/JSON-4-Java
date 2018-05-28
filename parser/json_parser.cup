@@ -1,53 +1,63 @@
 /*
- * Simple JSON parser.
+ * Copyright © 2018 Damien Vergnet
+ * 
+ * This file is part of JSON-4-Java.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package net.darmo_creations.json.parser;
 
-import java_cup.runtime.*;
 import net.darmo_creations.json.parser.Lexer;
 import net.darmo_creations.json.*;
-import java.utils.*;
+import java.util.*;
 
 parser code {:
   protected Lexer lexer;
 :}
 
 terminal LCURLY, RCURLY, LBRACKET, RBRACKET, COLON, COMMA;
-terminal Integer INT;
-terminal Double FLOAT;
+terminal Double NUMBER;
 terminal String STRING;
 terminal Boolean BOOLEAN;
-terminal Object NULL;
+terminal NULL;
 
 non terminal JsonObject object;
 non terminal JsonArray array;
-non terminal JsonValue literal_value;
-non terminal JsonBase value;
-non terminal Map<String, JsonBase> members;
-non terminal List<JsonBase> elements;
+non terminal JsonEntity value;
+non terminal Map<String, JsonEntity> members;
+non terminal List<JsonEntity> elements;
 
 object ::= LCURLY RCURLY            {: RESULT = new JsonObject(); :}
          | LCURLY members:m RCURLY  {: RESULT = new JsonObject(m); :}
          ;
 
-members ::= STRING:key COLON value:val {: Map<String, JsonBase> m = new HashMap<>(); m.put(key, val); RESULT = m; :}
+members ::= STRING:key COLON value:val {: Map<String, JsonEntity> m = new HashMap<>(); m.put(key, val); RESULT = m; :}
           | STRING:key COLON value:val COMMA members:m {: m.put(key, val); RESULT = m; :}
           ;
 
-array ::= LBRACKET RBRACKET                 {: RESULT = new ArrayList<>(); :}
-        | LBRACKET elements:elems RBRACKET  {: RESULT = elems; :}
+array ::= LBRACKET RBRACKET                 {: RESULT = new JsonArray(); :}
+        | LBRACKET elements:elems RBRACKET  {: RESULT = new JsonArray(elems); :}
         ;
 
-elements ::= value:val {: List<JsonBase> elems = new ArrayList<>(); elems.add(val); RESULT = elems; :}
+elements ::= value:val {: List<JsonEntity> elems = new ArrayList<>(); elems.add(val); RESULT = elems; :}
            | value:val COMMA elements:elems {: elems.add(0, val); RESULT = elems; :}
            ;
 
 value ::= STRING:s  {: RESULT = new JsonValue(s); :}
-        | INT:i     {: RESULT = new JsonValue(i); :}
-        | FLOAT:f   {: RESULT = new JsonValue(f); :}
+        | NUMBER:n  {: RESULT = new JsonValue(n); :}
         | object:o  {: RESULT = new JsonValue(o); :}
         | array:a   {: RESULT = new JsonValue(a); :}
         | BOOLEAN:b {: RESULT = new JsonValue(b); :}
-        | NULL:n    {: RESULT = new JsonValue(n); :}
+        | NULL      {: RESULT = new JsonValue(null); :}
         ;
