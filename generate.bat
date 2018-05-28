@@ -6,7 +6,7 @@ set dir=src\main\java\%package:.=\%\
 set symbols=Tokens
 
 java -jar libs\jflex-1.6.1.jar parser\%fname%.jflex -d %dir%
-java -jar libs\java-cup-11a.jar -package %package% -symbols %symbols% -parser JsonParser parser\%fname%.cup
+java -jar libs\java-cup-11b.jar -package %package% -symbols %symbols% -parser Parser parser\%fname%.cup
 rem Move Parser.java and Tokens.java
 move *.java %dir%
 rem Delete backup file Lexer.java~

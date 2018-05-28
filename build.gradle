@@ -39,7 +39,7 @@ repositories {
 
 dependencies {
   compile files('libs/jflex-1.6.1.jar')
-  compile files('libs/java-cup-11a.jar')
+  compile files('libs/java-cup-11b.jar')
   // Use JUnit test framework
   testImplementation 'junit:junit:4.12'
 }
