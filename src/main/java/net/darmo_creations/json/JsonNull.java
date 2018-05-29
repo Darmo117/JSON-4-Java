@@ -18,6 +18,11 @@
  */
 package net.darmo_creations.json;
 
+/**
+ * This class represents a JSON null value.
+ *
+ * @author Damien Vergnet
+ */
 public final class JsonNull extends JsonValue<Void> {
   private static final long serialVersionUID = -723432609209877605L;
 

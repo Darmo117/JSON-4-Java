@@ -18,6 +18,11 @@
  */
 package net.darmo_creations.json;
 
+/**
+ * This class represents a JSON boolean.
+ *
+ * @author Damien Vergnet
+ */
 public final class JsonBoolean extends JsonValue<Boolean> {
   private static final long serialVersionUID = 7082720359306820854L;
 

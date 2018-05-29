@@ -18,6 +18,11 @@
  */
 package net.darmo_creations.json;
 
+/**
+ * This class represents a JSON number.
+ *
+ * @author Damien Vergnet
+ */
 public final class JsonNumber extends JsonValue<Double> {
   private static final long serialVersionUID = 3006650913617176985L;
 
@@ -25,6 +30,10 @@ public final class JsonNumber extends JsonValue<Double> {
     super(value);
   }
 
+  /**
+   * Returns an unformatted representation of this value. If the number is an integer the decimal
+   * part and dot will not appear.
+   */
   @Override
   public String toString() {
     if (this.value == Math.floor(this.value))

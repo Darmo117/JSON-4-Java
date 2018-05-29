@@ -18,6 +18,11 @@
  */
 package net.darmo_creations.json;
 
+/**
+ * This class represents a JSON string.
+ *
+ * @author Damien Vergnet
+ */
 public final class JsonString extends JsonValue<String> {
   private static final long serialVersionUID = -4540752717027411018L;
 
@@ -25,6 +30,9 @@ public final class JsonString extends JsonValue<String> {
     super(value);
   }
 
+  /**
+   * Returns an unformatted representation of this JSON string. Value will be between double quotes.
+   */
   @Override
   public String toString() {
     return "\"" + this.value + "\"";

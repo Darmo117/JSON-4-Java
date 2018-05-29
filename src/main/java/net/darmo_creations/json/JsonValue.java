@@ -18,11 +18,21 @@
  */
 package net.darmo_creations.json;
 
+/**
+ * Base class for JSON literals.
+ * 
+ * @author Damien Vergnet
+ *
+ * @param <T> type of the internal value
+ */
 public abstract class JsonValue<T> implements JsonEntity {
   private static final long serialVersionUID = -3315891098392786432L;
 
   protected T value;
 
+  /**
+   * Creates a value.
+   */
   public JsonValue(T value) {
     this.value = value;
   }
@@ -35,6 +45,9 @@ public abstract class JsonValue<T> implements JsonEntity {
     return this.value == null;
   }
 
+  /**
+   * Returns the type of the internal value, or null if the value is null.
+   */
   @SuppressWarnings("unchecked")
   public Class<T> getType() {
     return isNull() ? null : (Class<T>) this.value.getClass();
@@ -67,7 +80,8 @@ public abstract class JsonValue<T> implements JsonEntity {
   }
 
   /**
-   * Returns an unformatted representation of this value.
+   * Returns an unformatted representation of this value. The result is the one returned by
+   * {@link String#valueOf(Object)} method. May be overriden by subclasses.
    */
   @Override
   public String toString() {

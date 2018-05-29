@@ -22,27 +22,42 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.StringJoiner;
 
+/**
+ * This class represents a JSON array. It can store {@link JsonEntity} values.
+ *
+ * @author Damien Vergnet
+ */
 public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity {
   private static final long serialVersionUID = -5326812842277159880L;
 
+  /**
+   * Creates an empty array.
+   */
   public JsonArray() {
     super();
   }
 
-  public JsonArray(int initialCapacity) {
-    super(initialCapacity);
-  }
-
+  /**
+   * Creates an array from the given collection.
+   */
   public JsonArray(Collection<? extends JsonEntity> c) {
     super(c);
   }
 
+  /**
+   * Returns the element at the specified position in this array. It will try to cast the element
+   * into the given object type.
+   * 
+   * @param index index of the element to return
+   * @param type the object type into which the element has to be cast
+   * @return the element at the specified position in this array
+   */
   public <T extends JsonEntity> T getAs(int index, ObjectType<T> type) {
     return type.getObjectClass().cast(get(index));
   }
 
   /**
-   * Returns an unformatted representation of this value.
+   * Returns an unformatted JSON representation of this array.
    */
   @Override
   public String toString() {

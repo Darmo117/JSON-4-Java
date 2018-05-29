@@ -22,29 +22,44 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
+/**
+ * This class represents a JSON object. It associates String keys with {@link JsonEntity} values.
+ *
+ * @author Damien Vergnet
+ */
 public final class JsonObject extends HashMap<String, JsonEntity> implements JsonEntity {
   private static final long serialVersionUID = -1090220898175859874L;
 
+  /**
+   * Creates an empty object.
+   */
   public JsonObject() {
     super();
   }
 
-  public JsonObject(int initialCapacity) {
-    super(initialCapacity);
-  }
-
-  public JsonObject(int initialCapacity, float loadFactor) {
-    super(initialCapacity, loadFactor);
-  }
-
+  /**
+   * Creates an object from the given map.
+   */
   public JsonObject(Map<String, ? extends JsonEntity> m) {
     super(m);
   }
 
+  /**
+   * Returns the entity to which the specified key is mapped, or null if this object contains no
+   * mapping for the key. It will try to cast the value into the given object type.
+   * 
+   * @param key the key whose associated value is to be returned
+   * @param type the object type into which the entity has to be cast
+   * @return the entity to which the specified key is mapped, or null if this map contains no
+   *         mapping for the key
+   */
   public <T extends JsonEntity> T getAs(String key, ObjectType<T> type) {
     return type.getObjectClass().cast(get(key));
   }
 
+  /**
+   * Returns the unformatted JSON representation of this object.
+   */
   @Override
   public String toString() {
     StringJoiner sj = new StringJoiner(",", "{", "}");
