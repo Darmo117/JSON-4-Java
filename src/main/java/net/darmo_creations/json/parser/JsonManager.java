@@ -27,6 +27,11 @@ import net.darmo_creations.json.JsonArray;
 import net.darmo_creations.json.JsonEntity;
 import net.darmo_creations.json.JsonObject;
 
+/**
+ * This class provides two methods to parse and format JSON strings and entities.
+ *
+ * @author Damien Vergnet
+ */
 public final class JsonManager {
   /**
    * Parses a JSON string.
@@ -46,6 +51,9 @@ public final class JsonManager {
 
   /**
    * Returns a formatted representation of the given JSON entity.
+   * 
+   * @param entity the entity to format
+   * @param indentation number of spaces per indentation level; must be > 0
    */
   public static String format(JsonEntity entity, int indentation) {
     if (indentation <= 0)
@@ -57,7 +65,7 @@ public final class JsonManager {
     String indent1 = indentLevel > 0 ? String.format("%" + indentation * indentLevel + "s", "") : "";
     String indent = String.format("%" + indentation * (indentLevel + 1) + "s", "");
 
-    if (entity.isObject()) {
+    if (entity instanceof JsonObject) {
       StringJoiner sj = new StringJoiner(",\n", "{\n", "\n" + indent1 + "}");
       JsonObject object = (JsonObject) entity;
 
@@ -67,7 +75,7 @@ public final class JsonManager {
 
       return sj.toString();
     }
-    else if (entity.isArray()) {
+    else if (entity instanceof JsonArray) {
       StringJoiner sj = new StringJoiner(",\n", "[\n", "\n" + indent1 + "]");
       JsonArray array = (JsonArray) entity;
 
@@ -77,11 +85,9 @@ public final class JsonManager {
 
       return sj.toString();
     }
-    else if (entity.isValue()) {
+    else {
       return entity.toString();
     }
-
-    throw new IllegalArgumentException("Invalid JSON entity!");
   }
 
   private JsonManager() {}

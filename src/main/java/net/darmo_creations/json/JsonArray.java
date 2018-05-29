@@ -41,11 +41,6 @@ public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity
     return type.getObjectClass().cast(get(index));
   }
 
-  @Override
-  public boolean isArray() {
-    return true;
-  }
-
   /**
    * Returns an unformatted representation of this value.
    */

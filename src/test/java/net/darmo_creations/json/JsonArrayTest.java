@@ -24,21 +24,6 @@ import org.junit.Test;
 
 public class JsonArrayTest {
   @Test
-  public void testNotIsArray() {
-    assertTrue(new JsonArray().isArray());
-  }
-
-  @Test
-  public void testNotIsObject() {
-    assertFalse(new JsonArray().isObject());
-  }
-
-  @Test
-  public void testNotIsValue() {
-    assertFalse(new JsonArray().isValue());
-  }
-
-  @Test
   public void testGetObject() {
     testGet(new JsonObject(), ObjectType.OBJECT);
   }

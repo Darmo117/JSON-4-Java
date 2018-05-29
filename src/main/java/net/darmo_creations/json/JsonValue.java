@@ -41,11 +41,6 @@ public abstract class JsonValue<T> implements JsonEntity {
   }
 
   @Override
-  public final boolean isValue() {
-    return true;
-  }
-
-  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;

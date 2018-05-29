@@ -25,16 +25,4 @@ import java.io.Serializable;
  *
  * @author Damien Vergnet
  */
-public interface JsonEntity extends Serializable {
-  default boolean isObject() {
-    return false;
-  }
-
-  default boolean isArray() {
-    return false;
-  }
-
-  default boolean isValue() {
-    return false;
-  }
-}
+public interface JsonEntity extends Serializable {}

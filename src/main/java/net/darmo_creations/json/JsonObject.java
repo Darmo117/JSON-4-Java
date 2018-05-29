@@ -46,11 +46,6 @@ public final class JsonObject extends HashMap<String, JsonEntity> implements Jso
   }
 
   @Override
-  public boolean isObject() {
-    return true;
-  }
-
-  @Override
   public String toString() {
     StringJoiner sj = new StringJoiner(",", "{", "}");
     entrySet().forEach(e -> sj.add("\"" + e.getKey() + "\":" + e.getValue()));

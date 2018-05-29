@@ -26,21 +26,6 @@ import net.darmo_creations.json.parser.JsonManager;
 
 public class JsonValueTest {
   @Test
-  public void testIsValue() {
-    assertTrue(new JsonNull().isValue());
-  }
-
-  @Test
-  public void testNotIsObject() {
-    assertFalse(new JsonNull().isObject());
-  }
-
-  @Test
-  public void testNotIsArray() {
-    assertFalse(new JsonNull().isArray());
-  }
-
-  @Test
   public void testString() {
     assertEquals("Test", getValue("\"Test\"").getValue());
   }
