@@ -18,23 +18,10 @@
  */
 package net.darmo_creations.json;
 
-import java.io.Serializable;
+public final class JsonBoolean extends JsonValue<Boolean> {
+  private static final long serialVersionUID = 7082720359306820854L;
 
-/**
- * Base class for JSON entities.
- *
- * @author Damien Vergnet
- */
-public interface JsonEntity extends Serializable {
-  default boolean isObject() {
-    return false;
-  }
-
-  default boolean isArray() {
-    return false;
-  }
-
-  default boolean isValue() {
-    return false;
+  public JsonBoolean(boolean value) {
+    super(value);
   }
 }

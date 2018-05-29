@@ -50,12 +50,12 @@ public class JsonArrayTest {
 
   @Test
   public void testGetValue() {
-    testGet(new JsonValue(1.5), ObjectType.VALUE);
+    testGet(new JsonNumber(1.5), ObjectType.VALUE);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetObjectError() {
-    testGet(new JsonValue(1.5), ObjectType.OBJECT);
+    testGet(new JsonNumber(1.5), ObjectType.OBJECT);
   }
 
   @Test(expected = ClassCastException.class)
@@ -65,7 +65,7 @@ public class JsonArrayTest {
 
   @Test(expected = ClassCastException.class)
   public void testGetValueError() {
-    testGet(new JsonArray(), ObjectType.VALUE);;
+    testGet(new JsonArray(), ObjectType.VALUE);
   }
 
   private void testGet(JsonEntity object, ObjectType<?> type) {
@@ -91,11 +91,11 @@ public class JsonArrayTest {
     JsonArray a1 = new JsonArray();
     a1.add(new JsonObject());
     a1.add(new JsonArray());
-    a1.add(new JsonValue(1.5));
+    a1.add(new JsonNumber(1.5));
     JsonArray a2 = new JsonArray();
     a2.add(new JsonObject());
     a2.add(new JsonArray());
-    a2.add(new JsonValue(1.5));
+    a2.add(new JsonNumber(1.5));
     assertEquals(a1, a2);
     assertEquals(a1.hashCode(), a2.hashCode());
   }
@@ -105,7 +105,7 @@ public class JsonArrayTest {
     JsonArray a = new JsonArray();
     a.add(new JsonObject());
     a.add(new JsonArray());
-    a.add(new JsonValue(1.5));
+    a.add(new JsonNumber(1.5));
     assertEquals("[{},[],1.5]", a.toString());
   }
 }

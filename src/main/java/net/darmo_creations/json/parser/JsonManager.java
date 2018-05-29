@@ -32,6 +32,8 @@ public final class JsonManager {
    * Parses a JSON string.
    */
   public static JsonObject parse(String json) {
+    // FIXME try using non-deprecated constructor
+    @SuppressWarnings("deprecation")
     Parser parser = new Parser(new Lexer(new StringReader(json)));
     try {
       Symbol s = parser.parse();
@@ -45,20 +47,22 @@ public final class JsonManager {
   /**
    * Returns a formatted representation of the given JSON entity.
    */
-  public static String format(JsonEntity entity) {
-    return format(entity, 0);
+  public static String format(JsonEntity entity, int indentation) {
+    if (indentation <= 0)
+      throw new IllegalArgumentException("Indentation must be > 0");
+    return format(entity, indentation, 0);
   }
 
-  private static String format(JsonEntity entity, int indentLevel) {
-    String indent1 = indentLevel > 0 ? String.format("%" + 4 * indentLevel + "s", "") : "";
-    String indent = String.format("%" + 4 * (indentLevel + 1) + "s", "");
+  private static String format(JsonEntity entity, int indentation, int indentLevel) {
+    String indent1 = indentLevel > 0 ? String.format("%" + indentation * indentLevel + "s", "") : "";
+    String indent = String.format("%" + indentation * (indentLevel + 1) + "s", "");
 
     if (entity.isObject()) {
       StringJoiner sj = new StringJoiner(",\n", "{\n", "\n" + indent1 + "}");
       JsonObject object = (JsonObject) entity;
 
       for (Map.Entry<String, JsonEntity> e : object.entrySet()) {
-        sj.add(indent + "\"" + e.getKey() + "\": " + format(e.getValue(), indentLevel + 1));
+        sj.add(indent + "\"" + e.getKey() + "\": " + format(e.getValue(), indentation, indentLevel + 1));
       }
 
       return sj.toString();
@@ -68,7 +72,7 @@ public final class JsonManager {
       JsonArray array = (JsonArray) entity;
 
       for (JsonEntity e : array) {
-        sj.add(indent + format(e, indentLevel + 1));
+        sj.add(indent + format(e, indentation, indentLevel + 1));
       }
 
       return sj.toString();

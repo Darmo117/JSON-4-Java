@@ -25,7 +25,12 @@ public final class ObjectType<T extends JsonEntity> implements Serializable {
 
   public static final ObjectType<JsonObject> OBJECT = new ObjectType<>(JsonObject.class);
   public static final ObjectType<JsonArray> ARRAY = new ObjectType<>(JsonArray.class);
+  @SuppressWarnings("rawtypes")
   public static final ObjectType<JsonValue> VALUE = new ObjectType<>(JsonValue.class);
+  public static final ObjectType<JsonString> STRING_VALUE = new ObjectType<>(JsonString.class);
+  public static final ObjectType<JsonNumber> NUMBER_VALUE = new ObjectType<>(JsonNumber.class);
+  public static final ObjectType<JsonBoolean> BOOLEAN_VALUE = new ObjectType<>(JsonBoolean.class);
+  public static final ObjectType<JsonNull> NULL_VALUE = new ObjectType<>(JsonNull.class);
 
   private final Class<T> objectClass;
 

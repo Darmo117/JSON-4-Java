@@ -50,12 +50,12 @@ public class JsonObjectTest {
 
   @Test
   public void testGetValue() {
-    testGet(new JsonValue(1.5), ObjectType.VALUE);
+    testGet(new JsonNumber(1.5), ObjectType.VALUE);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetObjectError() {
-    testGet(new JsonValue(1.5), ObjectType.OBJECT);
+    testGet(new JsonNumber(1.5), ObjectType.OBJECT);
   }
 
   @Test(expected = ClassCastException.class)
@@ -91,9 +91,9 @@ public class JsonObjectTest {
     JsonObject o1 = new JsonObject();
     o1.put("a", new JsonArray());
     o1.put("b", new JsonObject());
-    o1.put("c", new JsonValue(1.5));
+    o1.put("c", new JsonNumber(1.5));
     JsonObject o2 = new JsonObject();
-    o2.put("c", new JsonValue(1.5));
+    o2.put("c", new JsonNumber(1.5));
     o2.put("b", new JsonObject());
     o2.put("a", new JsonArray());
     assertEquals(o1, o2);

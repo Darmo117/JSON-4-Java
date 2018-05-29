@@ -27,51 +27,51 @@ import net.darmo_creations.json.parser.JsonManager;
 public class JsonValueTest {
   @Test
   public void testIsValue() {
-    assertTrue(new JsonValue(null).isValue());
+    assertTrue(new JsonNull().isValue());
   }
 
   @Test
   public void testNotIsObject() {
-    assertFalse(new JsonValue(null).isObject());
+    assertFalse(new JsonNull().isObject());
   }
 
   @Test
   public void testNotIsArray() {
-    assertFalse(new JsonValue(null).isArray());
+    assertFalse(new JsonNull().isArray());
   }
 
   @Test
   public void testString() {
-    assertEquals("Test", getValue("\"Test\"").getString());
+    assertEquals("Test", getValue("\"Test\"").getValue());
   }
 
   @Test
   public void testNumber() {
-    assertEquals(1.5, getValue("1.5").getNumber(), 1e-4);
+    assertEquals(1.5, (Double) getValue("1.5").getValue(), 1e-4);
   }
 
   @Test
   public void testBooleanTrue() {
-    assertEquals(true, getValue("true").getBoolean());
+    assertEquals(true, getValue("true").getValue());
   }
 
   @Test
   public void testBooleanFalse() {
-    assertEquals(false, getValue("false").getBoolean());
+    assertEquals(false, getValue("false").getValue());
   }
 
   @Test
   public void testNull() {
-    JsonValue v = getValue("null");
+    JsonValue<?> v = getValue("null");
     assertTrue(v.isNull());
-    assertNull(v.getString());
+    assertNull(v.getValue());
   }
 
   @Test
   public void testNotNull() {
-    JsonValue v = getValue("\"Test\"");
+    JsonValue<?> v = getValue("\"Test\"");
     assertFalse(v.isNull());
-    assertNotNull(v.getString());
+    assertNotNull(v.getValue());
   }
 
   @Test
@@ -96,71 +96,70 @@ public class JsonValueTest {
 
   @Test
   public void testEqualsString() {
-    testEquals("Test", "\"Test\"");
+    testEquals(new JsonString("Test"), "\"Test\"");
   }
 
   @Test
   public void testEqualsNumber() {
-    testEquals(1.5, "1.5");
+    testEquals(new JsonNumber(1.5), "1.5");
   }
 
   @Test
   public void testEqualsBooleanTrue() {
-    testEquals(true, "true");
+    testEquals(new JsonBoolean(true), "true");
   }
 
   @Test
   public void testEqualsBooleanFalse() {
-    testEquals(false, "false");
+    testEquals(new JsonBoolean(false), "false");
   }
 
   @Test
   public void testEqualsNull() {
-    testEquals(null, "null");
+    testEquals(new JsonNull(), "null");
   }
 
   @Test
   public void testToStringString() {
-    testToString("\"Test\"", "Test");
+    testToString("\"Test\"", new JsonString("Test"));
   }
 
   @Test
   public void testToStringInteger() {
-    testToString("1", 1.0);
+    testToString("1", new JsonNumber(1.0));
   }
 
   @Test
   public void testToStringStrinDouble() {
-    testToString("1.5", 1.5);
+    testToString("1.5", new JsonNumber(1.5));
   }
 
   @Test
   public void testToStringBooleanTrue() {
-    testToString("true", true);
+    testToString("true", new JsonBoolean(true));
   }
 
   @Test
   public void testToStringBooleanFalse() {
-    testToString("false", false);
+    testToString("false", new JsonBoolean(false));
   }
 
   @Test
   public void testToStringNull() {
-    testToString("null", null);
+    testToString("null", new JsonNull());
   }
 
-  private void testToString(String expected, Object arg) {
-    assertEquals(expected, new JsonValue(arg).toString());
-  }
-
-  private void testEquals(Object value, String jsonValue) {
-    JsonValue expected = new JsonValue(value);
-    JsonValue actual = getValue(jsonValue);
+  private void testEquals(JsonValue<?> expected, String jsonValue) {
+    JsonValue<?> actual = getValue(jsonValue);
     assertEquals(expected, actual);
     assertEquals(expected.hashCode(), actual.hashCode());
   }
 
-  private JsonValue getValue(String jsonValue) {
+  private void testToString(String expected, JsonValue<?> value) {
+    assertEquals(expected, value.toString());
+  }
+
+  private JsonValue<?> getValue(String jsonValue) {
     return JsonManager.parse("{\"key\":" + jsonValue + "}").getAs("key", ObjectType.VALUE);
   }
 }

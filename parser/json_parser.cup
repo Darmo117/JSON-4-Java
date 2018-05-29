@@ -54,10 +54,10 @@ elements ::= value:val                      {: List<JsonEntity> elems = new Arra
            | value:val COMMA elements:elems {: elems.add(0, val); RESULT = elems; :}
            ;
 
-value ::= STRING:s  {: RESULT = new JsonValue(s); :}
-        | NUMBER:n  {: RESULT = new JsonValue(n); :}
-        | BOOLEAN:b {: RESULT = new JsonValue(b); :}
-        | NULL      {: RESULT = new JsonValue(null); :}
+value ::= STRING:s  {: RESULT = new JsonString(s); :}
+        | NUMBER:n  {: RESULT = new JsonNumber(n); :}
+        | BOOLEAN:b {: RESULT = new JsonBoolean(b); :}
+        | NULL      {: RESULT = new JsonNull(); :}
         | object:o  {: RESULT = o; :}
         | array:a   {: RESULT = a; :}
         ;

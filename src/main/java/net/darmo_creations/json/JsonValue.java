@@ -18,36 +18,30 @@
  */
 package net.darmo_creations.json;
 
-// TODO Add tests
-public final class JsonValue implements JsonEntity {
-  private Object value;
+public abstract class JsonValue<T> implements JsonEntity {
+  private static final long serialVersionUID = -3315891098392786432L;
 
-  public JsonValue(Object value) {
+  protected T value;
+
+  public JsonValue(T value) {
     this.value = value;
   }
 
-  public String getString() {
-    return (String) this.value;
-  }
-
-  public Double getNumber() {
-    return (Double) this.value;
-  }
-
-  public Boolean getBoolean() {
-    return (Boolean) this.value;
+  public T getValue() {
+    return this.value;
   }
 
   public boolean isNull() {
     return this.value == null;
   }
 
-  public Class<?> getType() {
-    return isNull() ? null : this.value.getClass();
+  @SuppressWarnings("unchecked")
+  public Class<T> getType() {
+    return isNull() ? null : (Class<T>) this.value.getClass();
   }
 
   @Override
-  public boolean isValue() {
+  public final boolean isValue() {
     return true;
   }
 
@@ -67,7 +61,7 @@ public final class JsonValue implements JsonEntity {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    JsonValue other = (JsonValue) obj;
+    JsonValue<?> other = (JsonValue<?>) obj;
     if (this.value == null) {
       if (other.value != null)
         return false;
@@ -82,10 +76,6 @@ public final class JsonValue implements JsonEntity {
    */
   @Override
   public String toString() {
-    if (this.value instanceof String)
-      return "\"" + this.value + "\"";
-    else if (this.value instanceof Double && (Double) this.value == Math.floor((Double) this.value))
-      return Integer.toString(((Double) this.value).intValue());
     return String.valueOf(this.value);
   }
 }

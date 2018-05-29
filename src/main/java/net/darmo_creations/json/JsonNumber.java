@@ -18,23 +18,17 @@
  */
 package net.darmo_creations.json;
 
-import java.io.Serializable;
+public final class JsonNumber extends JsonValue<Double> {
+  private static final long serialVersionUID = 3006650913617176985L;
 
-/**
- * Base class for JSON entities.
- *
- * @author Damien Vergnet
- */
-public interface JsonEntity extends Serializable {
-  default boolean isObject() {
-    return false;
+  public JsonNumber(double value) {
+    super(value);
   }
 
-  default boolean isArray() {
-    return false;
-  }
-
-  default boolean isValue() {
-    return false;
+  @Override
+  public String toString() {
+    if (this.value == Math.floor(this.value))
+      return Integer.toString(this.value.intValue());
+    return super.toString();
   }
 }
