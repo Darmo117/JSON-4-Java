@@ -21,25 +21,88 @@ package net.darmo_creations.json.parser;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
+import net.darmo_creations.json.JsonArray;
+import net.darmo_creations.json.JsonEntity;
+import net.darmo_creations.json.JsonObject;
+import net.darmo_creations.json.JsonValue;
+
 public class JsonManagerTest {
+  private static final Map<String, JsonEntity> TESTS;
+
+  static {
+    TESTS = new HashMap<>();
+    TESTS.put("{\"key\": \"value\"}", getObject(new JsonValue("value")));
+    TESTS.put("{\"key\": 1}", getObject(new JsonValue(1d)));
+    TESTS.put("{\"key\": 1.0}", getObject(new JsonValue(1d)));
+    TESTS.put("{\"key\": -1}", getObject(new JsonValue(-1d)));
+    TESTS.put("{\"key\": -1.0}", getObject(new JsonValue(-1d)));
+    TESTS.put("{\"key\": 1.2}", getObject(new JsonValue(1.2)));
+    TESTS.put("{\"key\": -1.2}", getObject(new JsonValue(-1.2)));
+    TESTS.put("{\"key\": 1e2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": 1.0e2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": -1e2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": -1.0e2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": 1.2e2}", getObject(new JsonValue(120d)));
+    TESTS.put("{\"key\": -1.2e2}", getObject(new JsonValue(-120d)));
+    TESTS.put("{\"key\": 1e+2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": 1.0e+2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": -1e+2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": -1.0e+2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": 1.2e+2}", getObject(new JsonValue(120d)));
+    TESTS.put("{\"key\": -1.2e+2}", getObject(new JsonValue(-120d)));
+    TESTS.put("{\"key\": 1e-2}", getObject(new JsonValue(0.01)));
+    TESTS.put("{\"key\": 1.0e-2}", getObject(new JsonValue(0.01)));
+    TESTS.put("{\"key\": -1e-2}", getObject(new JsonValue(-0.01)));
+    TESTS.put("{\"key\": -1.0e-2}", getObject(new JsonValue(-0.01)));
+    TESTS.put("{\"key\": 1.2e-2}", getObject(new JsonValue(0.012)));
+    TESTS.put("{\"key\": -1.2e-2}", getObject(new JsonValue(-0.012)));
+    TESTS.put("{\"key\": 1E2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": 1.0E2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": -1E2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": -1.0E2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": 1.2E2}", getObject(new JsonValue(120d)));
+    TESTS.put("{\"key\": -1.2E2}", getObject(new JsonValue(-120d)));
+    TESTS.put("{\"key\": 1E+2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": 1.0E+2}", getObject(new JsonValue(100d)));
+    TESTS.put("{\"key\": -1E+2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": -1.0E+2}", getObject(new JsonValue(-100d)));
+    TESTS.put("{\"key\": 1.2E+2}", getObject(new JsonValue(120d)));
+    TESTS.put("{\"key\": -1.2E+2}", getObject(new JsonValue(-120d)));
+    TESTS.put("{\"key\": 1E-2}", getObject(new JsonValue(0.01)));
+    TESTS.put("{\"key\": 1.0E-2}", getObject(new JsonValue(0.01)));
+    TESTS.put("{\"key\": -1E-2}", getObject(new JsonValue(-0.01)));
+    TESTS.put("{\"key\": -1.0E-2}", getObject(new JsonValue(-0.01)));
+    TESTS.put("{\"key\": 1.2E-2}", getObject(new JsonValue(0.012)));
+    TESTS.put("{\"key\": -1.2E-2}", getObject(new JsonValue(-0.012)));
+    JsonObject o = new JsonObject();
+    JsonArray a = new JsonArray();
+    a.add(new JsonValue(1d));
+    a.add(new JsonValue(2d));
+    a.add(new JsonValue("a"));
+    JsonObject o2 = new JsonObject();
+    o2.put("b", new JsonValue(true));
+    a.add(o2);
+    o.put("key", a);
+    o.put("c", new JsonValue(null));
+    TESTS.put("{\"key\": [1, 2, \"a\", {\"b\": true}], \"c\": null}", o);
+  }
+
+  private static JsonObject getObject(JsonEntity value) {
+    JsonObject o = new JsonObject();
+    o.put("key", value);
+    return o;
+  }
+
   @Test
   public void testCorrect() throws IOException {
-    List<String> lines = Files.readAllLines(Paths.get("src/test/java/net/darmo_creations/json/parser/correct.txt"));
-
-    for (int i = 0; i < lines.size(); i++) {
-      String line = lines.get(i);
-      // Ignore comments
-      if (!line.trim().startsWith("#") && !line.trim().isEmpty()) {
-        String[] values = line.split(";");
-        assertEquals("Line " + (i + 1), values[0], JsonManager.parse(values[1]).toString());
-      }
+    for (Map.Entry<String, JsonEntity> entry : TESTS.entrySet()) {
+      assertEquals(entry.getKey(), entry.getValue(), JsonManager.parse(entry.getKey()));
     }
   }
-  // TODO ass tests for incorrect inputs
+  // TODO add tests for incorrect inputs
 }
