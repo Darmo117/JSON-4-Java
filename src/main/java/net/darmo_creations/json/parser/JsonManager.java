@@ -31,11 +31,11 @@ public final class JsonManager {
   /**
    * Parses a JSON string.
    */
-  public static JsonEntity parse(String json) {
+  public static JsonObject parse(String json) {
     Parser parser = new Parser(new Lexer(new StringReader(json)));
     try {
       Symbol s = parser.parse();
-      return (JsonEntity) s.value;
+      return (JsonObject) s.value;
     }
     catch (Exception e) {
       throw new RuntimeException(e);
@@ -50,24 +50,25 @@ public final class JsonManager {
   }
 
   private static String format(JsonEntity entity, int indentLevel) {
-    String indent = String.format("%" + indentLevel + "s", "");
+    String indent1 = indentLevel > 0 ? String.format("%" + 4 * indentLevel + "s", "") : "";
+    String indent = String.format("%" + 4 * (indentLevel + 1) + "s", "");
 
     if (entity.isObject()) {
-      StringJoiner sj = new StringJoiner(",\n", "{\n", indent + "}");
+      StringJoiner sj = new StringJoiner(",\n", "{\n", "\n" + indent1 + "}");
       JsonObject object = (JsonObject) entity;
 
       for (Map.Entry<String, JsonEntity> e : object.entrySet()) {
-        sj.add(e.getKey() + ":" + format(e.getValue(), indentLevel + 1));
+        sj.add(indent + "\"" + e.getKey() + "\": " + format(e.getValue(), indentLevel + 1));
       }
 
       return sj.toString();
     }
     else if (entity.isArray()) {
-      StringJoiner sj = new StringJoiner(",\n", "[\n", indent + "]");
+      StringJoiner sj = new StringJoiner(",\n", "[\n", "\n" + indent1 + "]");
       JsonArray array = (JsonArray) entity;
 
       for (JsonEntity e : array) {
-        sj.add(format(e, indentLevel + 1));
+        sj.add(indent + format(e, indentLevel + 1));
       }
 
       return sj.toString();

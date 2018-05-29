@@ -18,6 +18,7 @@
  */
 package net.darmo_creations.json;
 
+// TODO Add tests
 public final class JsonValue implements JsonEntity {
   private Object value;
 
@@ -29,11 +30,7 @@ public final class JsonValue implements JsonEntity {
     return (String) this.value;
   }
 
-  public Integer getInteger() {
-    return (Integer) this.value;
-  }
-
-  public Double getDouble() {
+  public Double getNumber() {
     return (Double) this.value;
   }
 
@@ -51,6 +48,32 @@ public final class JsonValue implements JsonEntity {
 
   @Override
   public boolean isValue() {
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((this.value == null) ? 0 : this.value.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    JsonValue other = (JsonValue) obj;
+    if (this.value == null) {
+      if (other.value != null)
+        return false;
+    }
+    else if (!this.value.equals(other.value))
+      return false;
     return true;
   }
 
