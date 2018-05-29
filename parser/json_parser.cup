@@ -18,13 +18,8 @@
  */
 package net.darmo_creations.json.parser;
 
-import net.darmo_creations.json.parser.Lexer;
 import net.darmo_creations.json.*;
 import java.util.*;
-
-parser code {:
-  protected Lexer lexer;
-:}
 
 terminal LCURLY, RCURLY, LBRACKET, RBRACKET, COLON, COMMA;
 terminal Double NUMBER;

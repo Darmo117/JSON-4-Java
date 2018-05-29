@@ -37,8 +37,6 @@ public final class JsonManager {
    * Parses a JSON string.
    */
   public static JsonObject parse(String json) {
-    // FIXME try using non-deprecated constructor
-    @SuppressWarnings("deprecation")
     Parser parser = new Parser(new Lexer(new StringReader(json)));
     try {
       Symbol s = parser.parse();
