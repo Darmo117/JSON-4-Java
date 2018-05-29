@@ -53,8 +53,8 @@ public final class JsonObject extends HashMap<String, JsonEntity> implements Jso
    * @return the entity to which the specified key is mapped, or null if this map contains no
    *         mapping for the key
    */
-  public <T extends JsonEntity> T getAs(String key, ObjectType<T> type) {
-    return type.getObjectClass().cast(get(key));
+  public <T extends JsonEntity> T getAs(String key, JsonEntityType<T> type) {
+    return type.getEntityClass().cast(get(key));
   }
 
   /**

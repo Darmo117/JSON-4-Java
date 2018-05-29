@@ -25,35 +25,35 @@ import org.junit.Test;
 public class JsonObjectTest {
   @Test
   public void testGetObject() {
-    testGet(new JsonObject(), ObjectType.OBJECT);
+    testGet(new JsonObject(), JsonEntityType.OBJECT);
   }
 
   @Test
   public void testGetArray() {
-    testGet(new JsonArray(), ObjectType.ARRAY);
+    testGet(new JsonArray(), JsonEntityType.ARRAY);
   }
 
   @Test
   public void testGetValue() {
-    testGet(new JsonNumber(1.5), ObjectType.VALUE);
+    testGet(new JsonNumber(1.5), JsonEntityType.VALUE);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetObjectError() {
-    testGet(new JsonNumber(1.5), ObjectType.OBJECT);
+    testGet(new JsonNumber(1.5), JsonEntityType.OBJECT);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetArrayError() {
-    testGet(new JsonObject(), ObjectType.ARRAY);
+    testGet(new JsonObject(), JsonEntityType.ARRAY);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetValueError() {
-    testGet(new JsonArray(), ObjectType.VALUE);
+    testGet(new JsonArray(), JsonEntityType.VALUE);
   }
 
-  private void testGet(JsonEntity object, ObjectType<?> type) {
+  private void testGet(JsonEntity object, JsonEntityType<?> type) {
     JsonObject o = new JsonObject();
     o.put("a", object);
     assertNotNull(o.getAs("a", type));
@@ -63,12 +63,12 @@ public class JsonObjectTest {
   public void testGetKeyNotExists() {
     JsonObject o = new JsonObject();
     o.put("a", new JsonObject());
-    assertNull(o.getAs("b", ObjectType.OBJECT));
+    assertNull(o.getAs("b", JsonEntityType.OBJECT));
   }
 
   @Test
   public void testGetEmpty() {
-    assertNull(new JsonObject().getAs("a", ObjectType.OBJECT));
+    assertNull(new JsonObject().getAs("a", JsonEntityType.OBJECT));
   }
 
   @Test

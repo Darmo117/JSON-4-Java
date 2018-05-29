@@ -145,6 +145,6 @@ public class JsonValueTest {
   }
 
   private JsonValue<?> getValue(String jsonValue) {
-    return JsonManager.parse("{\"key\":" + jsonValue + "}").getAs("key", ObjectType.VALUE);
+    return JsonManager.parse("{\"key\":" + jsonValue + "}").getAs("key", JsonEntityType.VALUE);
   }
 }

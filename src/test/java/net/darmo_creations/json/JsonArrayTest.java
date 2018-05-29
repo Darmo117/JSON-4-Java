@@ -25,35 +25,35 @@ import org.junit.Test;
 public class JsonArrayTest {
   @Test
   public void testGetObject() {
-    testGet(new JsonObject(), ObjectType.OBJECT);
+    testGet(new JsonObject(), JsonEntityType.OBJECT);
   }
 
   @Test
   public void testGetArray() {
-    testGet(new JsonArray(), ObjectType.ARRAY);
+    testGet(new JsonArray(), JsonEntityType.ARRAY);
   }
 
   @Test
   public void testGetValue() {
-    testGet(new JsonNumber(1.5), ObjectType.VALUE);
+    testGet(new JsonNumber(1.5), JsonEntityType.VALUE);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetObjectError() {
-    testGet(new JsonNumber(1.5), ObjectType.OBJECT);
+    testGet(new JsonNumber(1.5), JsonEntityType.OBJECT);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetArrayError() {
-    testGet(new JsonObject(), ObjectType.ARRAY);
+    testGet(new JsonObject(), JsonEntityType.ARRAY);
   }
 
   @Test(expected = ClassCastException.class)
   public void testGetValueError() {
-    testGet(new JsonArray(), ObjectType.VALUE);
+    testGet(new JsonArray(), JsonEntityType.VALUE);
   }
 
-  private void testGet(JsonEntity object, ObjectType<?> type) {
+  private void testGet(JsonEntity object, JsonEntityType<?> type) {
     JsonArray a = new JsonArray();
     a.add(object);
     assertNotNull(a.getAs(0, type));
@@ -63,12 +63,12 @@ public class JsonArrayTest {
   public void testGetIndexNotExists() {
     JsonArray a = new JsonArray();
     a.add(new JsonObject());
-    assertNull(a.getAs(1, ObjectType.OBJECT));
+    assertNull(a.getAs(1, JsonEntityType.OBJECT));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testGetEmpty() {
-    assertNull(new JsonArray().getAs(0, ObjectType.OBJECT));
+    assertNull(new JsonArray().getAs(0, JsonEntityType.OBJECT));
   }
 
   @Test

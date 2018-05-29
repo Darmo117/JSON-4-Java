@@ -52,8 +52,8 @@ public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity
    * @param type the object type into which the element has to be cast
    * @return the element at the specified position in this array
    */
-  public <T extends JsonEntity> T getAs(int index, ObjectType<T> type) {
-    return type.getObjectClass().cast(get(index));
+  public <T extends JsonEntity> T getAs(int index, JsonEntityType<T> type) {
+    return type.getEntityClass().cast(get(index));
   }
 
   /**
