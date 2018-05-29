@@ -26,25 +26,18 @@ import net.darmo_creations.json.parser.JsonManager;
 
 public abstract class JsonValueTest<T> {
   private T expectedValue;
-  private Class<T> expectedClass;
   private JsonValue<T> expectedEntity;
   private String json;
 
-  public JsonValueTest(T expectedValue, Class<T> expectedClass, JsonValue<T> expectedEntity, String json) {
+  public JsonValueTest(T expectedValue, JsonValue<T> expectedEntity, String json) {
     this.expectedValue = expectedValue;
-    this.expectedClass = expectedClass;
     this.expectedEntity = expectedEntity;
     this.json = json;
   }
 
   @Test
   public void testValue() {
-    assertEquals(this.expectedValue, getValue(this.json).getValue());
-  }
-
-  @Test
-  public void testClass() {
-    assertEquals(this.expectedClass, getValue(this.json).getType());
+    assertEquals(this.expectedValue, getValue(this.json).get());
   }
 
   @Test
@@ -61,11 +54,11 @@ public abstract class JsonValueTest<T> {
   public void testNullity() {
     if (this.expectedValue == null) {
       assertTrue(this.expectedEntity.isNull());
-      assertNull(this.expectedEntity.getValue());
+      assertNull(this.expectedEntity.get());
     }
     else {
       assertFalse(this.expectedEntity.isNull());
-      assertNotNull(this.expectedEntity.getValue());
+      assertNotNull(this.expectedEntity.get());
     }
   }
 

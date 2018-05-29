@@ -20,6 +20,6 @@ package net.darmo_creations.json;
 
 public class JsonStringTest extends JsonValueTest<String> {
   public JsonStringTest() {
-    super("Test", String.class, new JsonString("Test"), "\"Test\"");
+    super("Test", new JsonString("Test"), "\"Test\"");
   }
 }

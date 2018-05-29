@@ -20,6 +20,6 @@ package net.darmo_creations.json;
 
 public class JsonNullTest extends JsonValueTest<Void> {
   public JsonNullTest() {
-    super(null, null, new JsonNull(), "null");
+    super(null, new JsonNull(), "null");
   }
 }

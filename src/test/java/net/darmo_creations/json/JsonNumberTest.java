@@ -22,7 +22,7 @@ import org.junit.Test;
 
 public class JsonNumberTest extends JsonValueTest<Double> {
   public JsonNumberTest() {
-    super(1.5, Double.class, new JsonNumber(1.5), "1.5");
+    super(1.5, new JsonNumber(1.5), "1.5");
   }
 
   @Test

@@ -37,20 +37,12 @@ public abstract class JsonValue<T> implements JsonEntity {
     this.value = value;
   }
 
-  public T getValue() {
+  public T get() {
     return this.value;
   }
 
   public boolean isNull() {
     return this.value == null;
-  }
-
-  /**
-   * Returns the type of the internal value, or null if the value is null.
-   */
-  @SuppressWarnings("unchecked")
-  public Class<T> getType() {
-    return isNull() ? null : (Class<T>) this.value.getClass();
   }
 
   @Override
