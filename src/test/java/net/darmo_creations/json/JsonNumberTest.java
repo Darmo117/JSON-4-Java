@@ -18,11 +18,15 @@
  */
 package net.darmo_creations.json;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import org.junit.Test;
 
-@RunWith(Suite.class)
-@SuiteClasses({ JsonArrayTest.class, JsonObjectTest.class, JsonStringTest.class, JsonNumberTest.class, JsonBooleanTrueTest.class,
-  JsonBooleanFalseTest.class, JsonNullTest.class })
-public class ModelTests {}
+public class JsonNumberTest extends JsonValueTest<Double> {
+  public JsonNumberTest() {
+    super(1.5, Double.class, new JsonNumber(1.5), "1.5");
+  }
+
+  @Test
+  public void testToStringInteger() {
+    testToString("1", new JsonNumber(1));
+  }
+}

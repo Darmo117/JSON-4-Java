@@ -24,127 +24,62 @@ import org.junit.Test;
 
 import net.darmo_creations.json.parser.JsonManager;
 
-public class JsonValueTest {
-  @Test
-  public void testString() {
-    assertEquals("Test", getValue("\"Test\"").getValue());
+public abstract class JsonValueTest<T> {
+  private T expectedValue;
+  private Class<T> expectedClass;
+  private JsonValue<T> expectedEntity;
+  private String json;
+
+  public JsonValueTest(T expectedValue, Class<T> expectedClass, JsonValue<T> expectedEntity, String json) {
+    this.expectedValue = expectedValue;
+    this.expectedClass = expectedClass;
+    this.expectedEntity = expectedEntity;
+    this.json = json;
   }
 
   @Test
-  public void testNumber() {
-    assertEquals(1.5, (Double) getValue("1.5").getValue(), 1e-4);
+  public void testValue() {
+    assertEquals(this.expectedValue, getValue(this.json).getValue());
   }
 
   @Test
-  public void testBooleanTrue() {
-    assertEquals(true, getValue("true").getValue());
+  public void testClass() {
+    assertEquals(this.expectedClass, getValue(this.json).getType());
   }
 
   @Test
-  public void testBooleanFalse() {
-    assertEquals(false, getValue("false").getValue());
+  public void testEquals() {
+    testEquals(this.expectedEntity, this.json);
   }
 
   @Test
-  public void testNull() {
-    JsonValue<?> v = getValue("null");
-    assertTrue(v.isNull());
-    assertNull(v.getValue());
+  public void testToString() {
+    testToString(this.json, this.expectedEntity);
   }
 
   @Test
-  public void testNotNull() {
-    JsonValue<?> v = getValue("\"Test\"");
-    assertFalse(v.isNull());
-    assertNotNull(v.getValue());
+  public void testNullity() {
+    if (this.expectedValue == null) {
+      assertTrue(this.expectedEntity.isNull());
+      assertNull(this.expectedEntity.getValue());
+    }
+    else {
+      assertFalse(this.expectedEntity.isNull());
+      assertNotNull(this.expectedEntity.getValue());
+    }
   }
 
-  @Test
-  public void testClassString() {
-    assertEquals(String.class, getValue("\"Test\"").getType());
-  }
-
-  @Test
-  public void testClassNumber() {
-    assertEquals(Double.class, getValue("1.5").getType());
-  }
-
-  @Test
-  public void testClassBoolean() {
-    assertEquals(Boolean.class, getValue("true").getType());
-  }
-
-  @Test
-  public void testClassNull() {
-    assertNull(getValue("null").getType());
-  }
-
-  @Test
-  public void testEqualsString() {
-    testEquals(new JsonString("Test"), "\"Test\"");
-  }
-
-  @Test
-  public void testEqualsNumber() {
-    testEquals(new JsonNumber(1.5), "1.5");
-  }
-
-  @Test
-  public void testEqualsBooleanTrue() {
-    testEquals(new JsonBoolean(true), "true");
-  }
-
-  @Test
-  public void testEqualsBooleanFalse() {
-    testEquals(new JsonBoolean(false), "false");
-  }
-
-  @Test
-  public void testEqualsNull() {
-    testEquals(new JsonNull(), "null");
-  }
-
-  @Test
-  public void testToStringString() {
-    testToString("\"Test\"", new JsonString("Test"));
-  }
-
-  @Test
-  public void testToStringInteger() {
-    testToString("1", new JsonNumber(1.0));
-  }
-
-  @Test
-  public void testToStringStrinDouble() {
-    testToString("1.5", new JsonNumber(1.5));
-  }
-
-  @Test
-  public void testToStringBooleanTrue() {
-    testToString("true", new JsonBoolean(true));
-  }
-
-  @Test
-  public void testToStringBooleanFalse() {
-    testToString("false", new JsonBoolean(false));
-  }
-
-  @Test
-  public void testToStringNull() {
-    testToString("null", new JsonNull());
-  }
-
-  private void testEquals(JsonValue<?> expected, String jsonValue) {
+  protected void testEquals(JsonValue<?> expected, String jsonValue) {
     JsonValue<?> actual = getValue(jsonValue);
     assertEquals(expected, actual);
     assertEquals(expected.hashCode(), actual.hashCode());
   }
 
-  private void testToString(String expected, JsonValue<?> value) {
+  protected void testToString(String expected, JsonValue<?> value) {
     assertEquals(expected, value.toString());
   }
 
-  private JsonValue<?> getValue(String jsonValue) {
+  protected JsonValue<?> getValue(String jsonValue) {
     return JsonManager.parse("{\"key\":" + jsonValue + "}").getAs("key", JsonEntityType.VALUE);
   }
 }

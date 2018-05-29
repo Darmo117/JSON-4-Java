@@ -18,11 +18,8 @@
  */
 package net.darmo_creations.json;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-
-@RunWith(Suite.class)
-@SuiteClasses({ JsonArrayTest.class, JsonObjectTest.class, JsonStringTest.class, JsonNumberTest.class, JsonBooleanTrueTest.class,
-  JsonBooleanFalseTest.class, JsonNullTest.class })
-public class ModelTests {}
+public class JsonStringTest extends JsonValueTest<String> {
+  public JsonStringTest() {
+    super("Test", String.class, new JsonString("Test"), "\"Test\"");
+  }
+}
