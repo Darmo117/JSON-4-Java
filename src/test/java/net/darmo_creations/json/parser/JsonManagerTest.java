@@ -20,7 +20,6 @@ package net.darmo_creations.json.parser;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,10 +101,19 @@ public class JsonManagerTest {
   }
 
   @Test
-  public void testCorrect() throws IOException {
+  public void testCorrect() {
     for (Map.Entry<String, JsonEntity> entry : TESTS.entrySet()) {
       assertEquals(entry.getKey(), entry.getValue(), JsonManager.parse(entry.getKey()));
     }
   }
-  // TODO add tests for incorrect inputs
+
+  @Test(expected = JsonParseException.class)
+  public void testIncorrect() {
+    JsonManager.parse("{]");
+  }
+
+  @Test(expected = JsonParseException.class)
+  public void testIllegalCharacter() {
+    JsonManager.parse("{\"a\":&}");
+  }
 }

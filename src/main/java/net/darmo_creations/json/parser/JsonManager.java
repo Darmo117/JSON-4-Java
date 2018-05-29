@@ -22,7 +22,6 @@ import java.io.StringReader;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import java_cup.runtime.Symbol;
 import net.darmo_creations.json.JsonArray;
 import net.darmo_creations.json.JsonEntity;
 import net.darmo_creations.json.JsonObject;
@@ -35,15 +34,16 @@ import net.darmo_creations.json.JsonObject;
 public final class JsonManager {
   /**
    * Parses a JSON string.
+   * 
+   * @throws JsonParseException if the string contains syntax errors
    */
   public static JsonObject parse(String json) {
-    Parser parser = new Parser(new Lexer(new StringReader(json)));
     try {
-      Symbol s = parser.parse();
-      return (JsonObject) s.value;
+      Parser parser = new Parser(new Lexer(new StringReader(json)));
+      return (JsonObject) parser.parse().value;
     }
-    catch (Exception e) {
-      throw new RuntimeException(e);
+    catch (Throwable e) {
+      throw new JsonParseException(e);
     }
   }
 
