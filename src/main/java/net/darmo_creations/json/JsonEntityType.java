@@ -33,7 +33,6 @@ public final class JsonEntityType<T extends JsonEntity> {
   public static final JsonEntityType<JsonString> STRING_VALUE = new JsonEntityType<>(JsonString.class);
   public static final JsonEntityType<JsonNumber> NUMBER_VALUE = new JsonEntityType<>(JsonNumber.class);
   public static final JsonEntityType<JsonBoolean> BOOLEAN_VALUE = new JsonEntityType<>(JsonBoolean.class);
-  public static final JsonEntityType<JsonNull> NULL_VALUE = new JsonEntityType<>(JsonNull.class);
 
   private final Class<T> entityClass;
 

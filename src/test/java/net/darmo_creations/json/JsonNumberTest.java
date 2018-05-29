@@ -27,6 +27,6 @@ public class JsonNumberTest extends JsonValueTest<Double> {
 
   @Test
   public void testToStringInteger() {
-    testToString("1", new JsonNumber(1));
+    testToString("1", new JsonNumber(1d));
   }
 }

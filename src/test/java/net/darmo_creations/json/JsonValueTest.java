@@ -50,18 +50,6 @@ public abstract class JsonValueTest<T> {
     testToString(this.json, this.expectedEntity);
   }
 
-  @Test
-  public void testNullity() {
-    if (this.expectedValue == null) {
-      assertTrue(this.expectedEntity.isNull());
-      assertNull(this.expectedEntity.get());
-    }
-    else {
-      assertFalse(this.expectedEntity.isNull());
-      assertNotNull(this.expectedEntity.get());
-    }
-  }
-
   protected void testEquals(JsonValue<?> expected, String jsonValue) {
     JsonValue<?> actual = getValue(jsonValue);
     assertEquals(expected, actual);

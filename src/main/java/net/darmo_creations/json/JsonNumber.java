@@ -26,7 +26,7 @@ package net.darmo_creations.json;
 public final class JsonNumber extends JsonValue<Double> {
   private static final long serialVersionUID = 3006650913617176985L;
 
-  public JsonNumber(double value) {
+  public JsonNumber(Double value) {
     super(value);
   }
 
@@ -36,6 +36,8 @@ public final class JsonNumber extends JsonValue<Double> {
    */
   @Override
   public String toString() {
+    if (this.value == null)
+      return "null";
     if (this.value == Math.floor(this.value))
       return Integer.toString(this.value.intValue());
     return super.toString();

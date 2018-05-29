@@ -84,7 +84,7 @@ public final class JsonManager {
       return sj.toString();
     }
     else {
-      return entity.toString();
+      return String.valueOf(entity);
     }
   }
 

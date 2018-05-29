@@ -14,7 +14,6 @@ import java.util.Map;
 import net.darmo_creations.json.JsonArray;
 import net.darmo_creations.json.JsonBoolean;
 import net.darmo_creations.json.JsonEntity;
-import net.darmo_creations.json.JsonNull;
 import net.darmo_creations.json.JsonNumber;
 import net.darmo_creations.json.JsonObject;
 import net.darmo_creations.json.JsonString;
@@ -320,7 +319,7 @@ class Parser extends java_cup.runtime.lr_parser {
         case 12: // value ::= NULL
         {
           JsonEntity RESULT = null;
-          RESULT = new JsonNull();
+          RESULT = null;
           CUP$Parser$result = this.parser.getSymbolFactory().newSymbol("value", 2, ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()),
               ((java_cup.runtime.Symbol) CUP$Parser$stack.peek()), RESULT);
         }

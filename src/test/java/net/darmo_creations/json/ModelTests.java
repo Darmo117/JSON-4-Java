@@ -24,5 +24,5 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ JsonArrayTest.class, JsonObjectTest.class, JsonStringTest.class, JsonNumberTest.class, JsonBooleanTrueTest.class,
-  JsonBooleanFalseTest.class, JsonNullTest.class })
+  JsonBooleanFalseTest.class })
 public class ModelTests {}

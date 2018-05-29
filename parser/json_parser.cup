@@ -52,7 +52,7 @@ elements ::= value:val                      {: List<JsonEntity> elems = new Arra
 value ::= STRING:s  {: RESULT = new JsonString(s); :}
         | NUMBER:n  {: RESULT = new JsonNumber(n); :}
         | BOOLEAN:b {: RESULT = new JsonBoolean(b); :}
-        | NULL      {: RESULT = new JsonNull(); :}
+        | NULL      {: RESULT = null; :}
         | object:o  {: RESULT = o; :}
         | array:a   {: RESULT = a; :}
         ;

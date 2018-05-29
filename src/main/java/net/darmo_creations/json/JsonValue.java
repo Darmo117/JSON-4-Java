@@ -18,6 +18,8 @@
  */
 package net.darmo_creations.json;
 
+import java.util.Objects;
+
 /**
  * Base class for JSON literals.
  * 
@@ -34,15 +36,11 @@ public abstract class JsonValue<T> implements JsonEntity {
    * Creates a value.
    */
   public JsonValue(T value) {
-    this.value = value;
+    this.value = Objects.requireNonNull(value);
   }
 
   public T get() {
     return this.value;
-  }
-
-  public boolean isNull() {
-    return this.value == null;
   }
 
   @Override

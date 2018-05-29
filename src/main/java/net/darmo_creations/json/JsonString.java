@@ -35,6 +35,6 @@ public final class JsonString extends JsonValue<String> {
    */
   @Override
   public String toString() {
-    return "\"" + this.value + "\"";
+    return this.value != null ? "\"" + this.value + "\"" : "null";
   }
 }
