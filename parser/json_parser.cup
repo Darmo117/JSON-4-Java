@@ -42,15 +42,15 @@ object ::= LCURLY RCURLY            {: RESULT = new JsonObject(); :}
          | LCURLY members:m RCURLY  {: RESULT = new JsonObject(m); :}
          ;
 
-members ::= STRING:key COLON value:val {: Map<String, JsonEntity> m = new HashMap<>(); m.put(key, val); RESULT = m; :}
-          | STRING:key COLON value:val COMMA members:m {: m.put(key, val); RESULT = m; :}
+members ::= STRING:key COLON value:val                  {: Map<String, JsonEntity> m = new HashMap<>(); m.put(key, val); RESULT = m; :}
+          | STRING:key COLON value:val COMMA members:m  {: m.put(key, val); RESULT = m; :}
           ;
 
 array ::= LBRACKET RBRACKET                 {: RESULT = new JsonArray(); :}
         | LBRACKET elements:elems RBRACKET  {: RESULT = new JsonArray(elems); :}
         ;
 
-elements ::= value:val {: List<JsonEntity> elems = new ArrayList<>(); elems.add(val); RESULT = elems; :}
+elements ::= value:val                      {: List<JsonEntity> elems = new ArrayList<>(); elems.add(val); RESULT = elems; :}
            | value:val COMMA elements:elems {: elems.add(0, val); RESULT = elems; :}
            ;
 
