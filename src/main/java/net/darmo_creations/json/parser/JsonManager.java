@@ -42,6 +42,10 @@ public final class JsonManager {
       Parser parser = new Parser(new Lexer(new StringReader(json)));
       return (JsonObject) parser.parse().value;
     }
+    // We do not want to wrap a JsonParseException into another one
+    catch (JsonParseException e) {
+      throw e;
+    }
     catch (Throwable e) {
       throw new JsonParseException(e);
     }

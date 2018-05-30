@@ -55,21 +55,23 @@ WhiteSpace = [ \t\n\r]+
   "true"        { return symbol(Tokens.BOOLEAN, true); }
   "false"       { return symbol(Tokens.BOOLEAN, false); }
   "null"        { return symbol(Tokens.NULL); }
-  \" /*"*/      { sb.setLength(0); yybegin(STRING); }
+  "\""          { sb.setLength(0); yybegin(STRING); }
   {Number}      { return symbol(Tokens.NUMBER, Double.parseDouble(yytext())); }
   {WhiteSpace}  { /* ignored */ }
 }
 
 <STRING> {
-  \"   /*"*/        { yybegin(YYINITIAL); return symbol(Tokens.STRING, sb.toString()); }
-  \\\" /*"*/        { sb.append("\""); }
-  \\\\              { sb.append("\\"); }
-  \\\               { sb.append("/"); }
-  \\b               { sb.append("\b"); }
-  \\f               { sb.append("\f"); }
-  \\n               { sb.append("\n"); }
-  \\r               { sb.append("\r"); }
-  \\t               { sb.append("\t"); }
-  \\u[\dA-Fa-f]{4}  { sb.append((char) Integer.parseInt(yytext().substring(2), 16)); }
-  .                 { sb.append(yytext()); }
+  "\""                { yybegin(YYINITIAL); return symbol(Tokens.STRING, sb.toString()); }
+  "\\\""              { sb.append("\""); }
+  "\\\\"              { sb.append("\\"); }
+  "\\/"               { sb.append("/"); }
+  "\\b"               { sb.append("\b"); }
+  "\\f"               { sb.append("\f"); }
+  "\\n"               { sb.append("\n"); }
+  "\\r"               { sb.append("\r"); }
+  "\\t"               { sb.append("\t"); }
+  \\u[\dA-Fa-f]{4}    { sb.append((char) Integer.parseInt(yytext().substring(2), 16)); }
+  [^\"\\] /*"*/       { if (Character.isISOControl(yytext().charAt(0)))
+                          throw new JsonParseException("Control characters are not allowed in strings!");
+                        sb.append(yytext()); }
 }

@@ -28,6 +28,7 @@ import org.junit.Test;
 import net.darmo_creations.json.JsonArray;
 import net.darmo_creations.json.JsonBoolean;
 import net.darmo_creations.json.JsonEntity;
+import net.darmo_creations.json.JsonEntityType;
 import net.darmo_creations.json.JsonNumber;
 import net.darmo_creations.json.JsonObject;
 import net.darmo_creations.json.JsonString;
@@ -107,12 +108,77 @@ public class JsonManagerTest {
   }
 
   @Test(expected = JsonParseException.class)
-  public void testIncorrect() {
+  public void testIllegalCharacter() {
+    JsonManager.parse("{\"a\":&}");
+  }
+
+  @Test(expected = JsonParseException.class)
+  public void testIncorrectSyntax() {
     JsonManager.parse("{]");
   }
 
   @Test(expected = JsonParseException.class)
-  public void testIllegalCharacter() {
-    JsonManager.parse("{\"a\":&}");
+  public void testIncorrectEscapeBackSolidus() {
+    JsonManager.parse("{\"key\":\"\\\"}");
+  }
+
+  @Test(expected = JsonParseException.class)
+  public void testIncorrectEscapeQuote() {
+    JsonManager.parse("{\"key\":\"\"\"}");
+  }
+
+  @Test(expected = JsonParseException.class)
+  public void testIncorrectControlCharacter() {
+    JsonManager.parse("{\"key\":\"\n\"}");
+  }
+
+  @Test
+  public void testCorrectEscapeBackSolidus() {
+    testCorrectEscape("\\\\", "\\");
+  }
+
+  @Test
+  public void testCorrectEscapeQuote() {
+    testCorrectEscape("\\\"", "\"");
+  }
+
+  @Test
+  public void testCorrectEscapeSolidus() {
+    testCorrectEscape("\\/", "/");
+  }
+
+  @Test
+  public void testCorrectEscapeBackSpace() {
+    testCorrectEscape("\\b", "\b");
+  }
+
+  @Test
+  public void testCorrectEscapeFormFeed() {
+    testCorrectEscape("\\f", "\f");
+  }
+
+  @Test
+  public void testCorrectEscapeNewLine() {
+    testCorrectEscape("\\n", "\n");
+  }
+
+  @Test
+  public void testCorrectEscapeCarriageReturn() {
+    testCorrectEscape("\\r", "\r");
+  }
+
+  @Test
+  public void testCorrectEscapeTab() {
+    testCorrectEscape("\\t", "\t");
+  }
+
+  @Test
+  public void testCorrectEscapeUnicode() {
+    testCorrectEscape("\\u0021", "!");
+  }
+
+  private void testCorrectEscape(String escape, String expected) {
+    JsonObject o = JsonManager.parse("{\"key\":\"" + escape + "\"}");
+    assertEquals(expected, o.getAs("key", JsonEntityType.STRING_VALUE).get());
   }
 }
