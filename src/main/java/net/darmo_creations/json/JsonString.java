@@ -18,6 +18,9 @@
  */
 package net.darmo_creations.json;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This class represents a JSON string.
  *
@@ -35,6 +38,35 @@ public final class JsonString extends JsonValue<String> {
    */
   @Override
   public String toString() {
-    return this.value != null ? "\"" + this.value + "\"" : "null";
+    return this.value != null ? "\"" + escaped(this.value) + "\"" : "null";
+  }
+
+  private static final Map<Character, String> ESCAPES = new HashMap<>();
+
+  static {
+    ESCAPES.put('\\', "\\\\");
+    ESCAPES.put('"', "\\\"");
+    ESCAPES.put('\b', "\\b");
+    ESCAPES.put('\f', "\\f");
+    ESCAPES.put('\n', "\\n");
+    ESCAPES.put('\r', "\\r");
+    ESCAPES.put('\t', "\\t");
+  }
+
+  private static String escaped(String s) {
+    StringBuilder sb = new StringBuilder();
+
+    for (char c : s.toCharArray()) {
+      if (ESCAPES.containsKey(c)) {
+        sb.append(ESCAPES.get(c));
+      }
+      else if (Character.isISOControl(c)) {
+        sb.append(String.format("\\u%04X", (int) c));
+      }
+      else
+        sb.append(String.valueOf(c));
+    }
+
+    return sb.toString();
   }
 }

@@ -18,8 +18,71 @@
  */
 package net.darmo_creations.json;
 
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
 public class JsonStringTest extends JsonValueTest<String> {
   public JsonStringTest() {
     super("Test", new JsonString("Test"), "\"Test\"");
+  }
+
+  @Test
+  public void testEscapeQuote() {
+    testEscape("\"", "\\\"");
+  }
+
+  @Test
+  public void testEscapeBackSolidus() {
+    testEscape("\\", "\\\\");
+  }
+
+  @Test
+  public void testEscapeBackSpace() {
+    testEscape("\b", "\\b");
+  }
+
+  @Test
+  public void testEscapeFormFeed() {
+    testEscape("\f", "\\f");
+  }
+
+  @Test
+  public void testEscapeNewLine() {
+    testEscape("\n", "\\n");
+  }
+
+  @Test
+  public void testEscapeCarriageReturn() {
+    testEscape("\r", "\\r");
+  }
+
+  @Test
+  public void testEscapeTab() {
+    testEscape("\t", "\\t");
+  }
+
+  @Test
+  public void testEscapeControls() {
+    List<Character> controls = new ArrayList<>();
+
+    // Control characters from 0x0 to 0x1f except those in the methods above
+    for (char c = '\u0000'; c <= '\u001f'; c++) {
+      if (c != '\b' && c != '\f' && c != '\n' && c != '\r' && c != '\t')
+        controls.add(c);
+    }
+    // Control characters from 0x7f to 0x9f
+    for (char c = '\u007f'; c <= '\u009f'; c++)
+      controls.add(c);
+
+    for (char c : controls)
+      testEscape(String.valueOf(c), String.format("\\u%04X", (int) c));
+  }
+
+  private void testEscape(String value, String expected) {
+    assertEquals("\"" + expected + "\"", new JsonString(value).toString());
   }
 }
