@@ -58,6 +58,8 @@ WhiteSpace = [ \t\n\r]+
   "\""          { sb.setLength(0); yybegin(STRING); }
   {Number}      { return symbol(Tokens.NUMBER, Double.parseDouble(yytext())); }
   {WhiteSpace}  { /* ignored */ }
+  /* Everything else is illegal */
+  .             { throw new JsonParseException(String.format("Invalid input '%s'", yytext())); }
 }
 
 <STRING> {
