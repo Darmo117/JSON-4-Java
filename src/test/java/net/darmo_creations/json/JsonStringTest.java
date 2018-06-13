@@ -27,7 +27,7 @@ import org.junit.Test;
 
 public class JsonStringTest extends JsonValueTest<String> {
   public JsonStringTest() {
-    super("Test", new JsonString("Test"), "\"Test\"");
+    super("Test", new JsonString("Test"), "\"Test\"", JsonEntityType.STRING_VALUE, "string");
   }
 
   @Test

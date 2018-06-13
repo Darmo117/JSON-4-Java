@@ -28,11 +28,16 @@ public abstract class JsonValueTest<T> {
   private T expectedValue;
   private JsonValue<T> expectedEntity;
   private String json;
+  private JsonEntityType<? extends JsonValue<T>> type;
+  private String typeName;
 
-  public JsonValueTest(T expectedValue, JsonValue<T> expectedEntity, String json) {
+  public JsonValueTest(T expectedValue, JsonValue<T> expectedEntity, String json, JsonEntityType<? extends JsonValue<T>> type,
+      String typeName) {
     this.expectedValue = expectedValue;
     this.expectedEntity = expectedEntity;
     this.json = json;
+    this.type = type;
+    this.typeName = typeName;
   }
 
   @Test
@@ -62,5 +67,15 @@ public abstract class JsonValueTest<T> {
 
   protected JsonValue<?> getValue(String jsonValue) {
     return JsonManager.parse("{\"key\":" + jsonValue + "}").getAs("key", JsonEntityType.VALUE);
+  }
+
+  @Test
+  public void testGetTypeName() {
+    assertEquals(this.typeName, this.expectedEntity.getTypeName());
+  }
+
+  @Test
+  public void testGetTypeNameEquals() {
+    assertEquals(this.type.getTypeName(), this.expectedEntity.getTypeName());
   }
 }

@@ -27,10 +27,11 @@ import java.util.Map;
  * @author Damien Vergnet
  */
 public final class JsonString extends JsonValue<String> {
+  public static final String TYPE_NAME = "string";
   private static final long serialVersionUID = -4540752717027411018L;
 
   public JsonString(String value) {
-    super(value, "string");
+    super(value, TYPE_NAME);
   }
 
   /**

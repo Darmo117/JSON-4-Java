@@ -93,4 +93,14 @@ public class JsonObjectTest {
     o.put("a", new JsonObject());
     assertEquals("{\"a\":{}}", o.toString());
   }
+
+  @Test
+  public void testGetTypeName() {
+    assertEquals("object", new JsonObject().getTypeName());
+  }
+
+  @Test
+  public void testGetTypeNameEquals() {
+    assertEquals(JsonEntityType.OBJECT.getTypeName(), new JsonObject().getTypeName());
+  }
 }

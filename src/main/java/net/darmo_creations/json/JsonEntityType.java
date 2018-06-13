@@ -26,18 +26,20 @@ package net.darmo_creations.json;
  * @param <T> the associated entity type
  */
 public final class JsonEntityType<T extends JsonEntity> {
-  public static final JsonEntityType<JsonObject> OBJECT = new JsonEntityType<>(JsonObject.class);
-  public static final JsonEntityType<JsonArray> ARRAY = new JsonEntityType<>(JsonArray.class);
+  public static final JsonEntityType<JsonObject> OBJECT = new JsonEntityType<>(JsonObject.class, JsonObject.TYPE_NAME);
+  public static final JsonEntityType<JsonArray> ARRAY = new JsonEntityType<>(JsonArray.class, JsonArray.TYPE_NAME);
   @SuppressWarnings("rawtypes")
-  public static final JsonEntityType<JsonValue> VALUE = new JsonEntityType<>(JsonValue.class);
-  public static final JsonEntityType<JsonString> STRING_VALUE = new JsonEntityType<>(JsonString.class);
-  public static final JsonEntityType<JsonNumber> NUMBER_VALUE = new JsonEntityType<>(JsonNumber.class);
-  public static final JsonEntityType<JsonBoolean> BOOLEAN_VALUE = new JsonEntityType<>(JsonBoolean.class);
+  public static final JsonEntityType<JsonValue> VALUE = new JsonEntityType<>(JsonValue.class, JsonValue.DEFAULT_TYPE_NAME);
+  public static final JsonEntityType<JsonString> STRING_VALUE = new JsonEntityType<>(JsonString.class, JsonString.TYPE_NAME);
+  public static final JsonEntityType<JsonNumber> NUMBER_VALUE = new JsonEntityType<>(JsonNumber.class, JsonNumber.TYPE_NAME);
+  public static final JsonEntityType<JsonBoolean> BOOLEAN_VALUE = new JsonEntityType<>(JsonBoolean.class, JsonBoolean.TYPE_NAME);
 
   private final Class<T> entityClass;
+  private final String typeName;
 
-  private JsonEntityType(Class<T> entityClass) {
+  private JsonEntityType(Class<T> entityClass, String typeName) {
     this.entityClass = entityClass;
+    this.typeName = typeName;
   }
 
   /**
@@ -45,5 +47,12 @@ public final class JsonEntityType<T extends JsonEntity> {
    */
   public Class<T> getEntityClass() {
     return this.entityClass;
+  }
+
+  /**
+   * Returns the entity type's name as returned by the {@link JsonEntity#getTypeName()} method.
+   */
+  public String getTypeName() {
+    return this.typeName;
   }
 }

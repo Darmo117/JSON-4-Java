@@ -28,6 +28,7 @@ import java.util.StringJoiner;
  * @author Damien Vergnet
  */
 public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity {
+  public static final String TYPE_NAME = "array";
   private static final long serialVersionUID = -5326812842277159880L;
 
   /**
@@ -60,7 +61,7 @@ public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity
 
   @Override
   public String getTypeName() {
-    return "array";
+    return TYPE_NAME;
   }
 
   /**

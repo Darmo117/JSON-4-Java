@@ -29,6 +29,7 @@ import java.util.StringJoiner;
  * @author Damien Vergnet
  */
 public final class JsonObject extends HashMap<String, JsonEntity> implements JsonEntity {
+  public static final String TYPE_NAME = "object";
   private static final long serialVersionUID = -1090220898175859874L;
 
   /**
@@ -64,7 +65,7 @@ public final class JsonObject extends HashMap<String, JsonEntity> implements Jso
 
   @Override
   public String getTypeName() {
-    return "object";
+    return TYPE_NAME;
   }
 
   /**

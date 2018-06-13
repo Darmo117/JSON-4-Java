@@ -20,6 +20,6 @@ package net.darmo_creations.json;
 
 public class JsonBooleanTrueTest extends JsonValueTest<Boolean> {
   public JsonBooleanTrueTest() {
-    super(true, new JsonBoolean(true), "true");
+    super(true, new JsonBoolean(true), "true", JsonEntityType.BOOLEAN_VALUE, "boolean");
   }
 }

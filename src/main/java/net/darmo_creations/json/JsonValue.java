@@ -28,6 +28,7 @@ import java.util.Objects;
  * @param <T> type of the internal value
  */
 public abstract class JsonValue<T> implements JsonEntity {
+  public static final String DEFAULT_TYPE_NAME = "literal value";
   private static final long serialVersionUID = -3315891098392786432L;
 
   protected T value;

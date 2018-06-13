@@ -93,4 +93,14 @@ public class JsonArrayTest {
     a.add(new JsonNumber(1.5));
     assertEquals("[{},[],1.5]", a.toString());
   }
+
+  @Test
+  public void testGetTypeName() {
+    assertEquals("array", new JsonArray().getTypeName());
+  }
+
+  @Test
+  public void testGetTypeNameEquals() {
+    assertEquals(JsonEntityType.ARRAY.getTypeName(), new JsonArray().getTypeName());
+  }
 }

@@ -24,6 +24,7 @@ package net.darmo_creations.json;
  * @author Damien Vergnet
  */
 public final class JsonNumber extends JsonValue<Double> {
+  public static final String TYPE_NAME = "number";
   private static final long serialVersionUID = 3006650913617176985L;
 
   public JsonNumber(Double value) {

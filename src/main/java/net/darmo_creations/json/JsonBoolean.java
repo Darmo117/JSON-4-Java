@@ -24,6 +24,7 @@ package net.darmo_creations.json;
  * @author Damien Vergnet
  */
 public final class JsonBoolean extends JsonValue<Boolean> {
+  public static final String TYPE_NAME = "boolean";
   private static final long serialVersionUID = 7082720359306820854L;
 
   public JsonBoolean(Boolean value) {
