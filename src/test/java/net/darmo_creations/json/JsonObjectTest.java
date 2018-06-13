@@ -20,6 +20,8 @@ package net.darmo_creations.json;
 
 import static org.junit.Assert.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.Test;
 
 public class JsonObjectTest {
@@ -59,16 +61,16 @@ public class JsonObjectTest {
     assertNotNull(o.getAs("a", type));
   }
 
-  @Test
+  @Test(expected = NoSuchElementException.class)
   public void testGetKeyNotExists() {
     JsonObject o = new JsonObject();
     o.put("a", new JsonObject());
-    assertNull(o.getAs("b", JsonEntityType.OBJECT));
+    o.getAs("b", JsonEntityType.OBJECT);
   }
 
-  @Test
+  @Test(expected = NoSuchElementException.class)
   public void testGetEmpty() {
-    assertNull(new JsonObject().getAs("a", JsonEntityType.OBJECT));
+    new JsonObject().getAs("a", JsonEntityType.OBJECT);
   }
 
   @Test

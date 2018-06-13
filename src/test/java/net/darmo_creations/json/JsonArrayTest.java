@@ -63,12 +63,12 @@ public class JsonArrayTest {
   public void testGetIndexNotExists() {
     JsonArray a = new JsonArray();
     a.add(new JsonObject());
-    assertNull(a.getAs(1, JsonEntityType.OBJECT));
+    a.getAs(1, JsonEntityType.OBJECT);
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testGetEmpty() {
-    assertNull(new JsonArray().getAs(0, JsonEntityType.OBJECT));
+    new JsonArray().getAs(0, JsonEntityType.OBJECT);
   }
 
   @Test
