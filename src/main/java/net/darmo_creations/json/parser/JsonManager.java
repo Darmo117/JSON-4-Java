@@ -35,18 +35,15 @@ public final class JsonManager {
   /**
    * Parses a JSON string.
    * 
+   * @param json the JSON string to parse
    * @throws JsonParseException if the string contains syntax errors
    */
   public static JsonObject parse(String json) {
+    Parser parser = new Parser(new Lexer(new StringReader(json)));
     try {
-      Parser parser = new Parser(new Lexer(new StringReader(json)));
       return (JsonObject) parser.parse().value;
     }
-    // We do not want to wrap a JsonParseException into another one
-    catch (JsonParseException e) {
-      throw e;
-    }
-    catch (Throwable e) {
+    catch (Exception e) {
       throw new JsonParseException(e);
     }
   }
@@ -55,7 +52,7 @@ public final class JsonManager {
    * Returns a formatted representation of the given JSON entity.
    * 
    * @param entity the entity to format
-   * @param indentation number of spaces per indentation level; must be > 0
+   * @param indentation number of spaces per indentation level; must be &gt; 0
    */
   public static String format(JsonEntity entity, int indentation) {
     if (indentation <= 0)

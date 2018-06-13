@@ -40,6 +40,8 @@ public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity
 
   /**
    * Creates an array from the given collection.
+   * 
+   * @param c the source collection
    */
   public JsonArray(Collection<? extends JsonEntity> c) {
     super(c);
@@ -52,7 +54,7 @@ public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity
    * @param index index of the element to return
    * @param type the object type into which the element has to be cast
    * @return the element at the specified position in this array
-   * @throws IndexOutOfBoundsException if the index is out of range (index < 0 or index ≥ size())
+   * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 or index ≥ size())
    * @throws ClassCastException if the actual value is not assignable to the specified type
    */
   public <T extends JsonEntity> T getAs(int index, JsonEntityType<T> type) {

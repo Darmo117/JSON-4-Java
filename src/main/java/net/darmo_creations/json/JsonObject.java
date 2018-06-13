@@ -41,6 +41,8 @@ public final class JsonObject extends HashMap<String, JsonEntity> implements Jso
 
   /**
    * Creates an object from the given map.
+   * 
+   * @param m the source map
    */
   public JsonObject(Map<String, ? extends JsonEntity> m) {
     super(m);

@@ -36,6 +36,9 @@ public abstract class JsonValue<T> implements JsonEntity {
 
   /**
    * Creates a value.
+   * 
+   * @param value entity value
+   * @param typeName entity type name
    */
   public JsonValue(T value, String typeName) {
     this.value = Objects.requireNonNull(value);
