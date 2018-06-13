@@ -31,12 +31,14 @@ public abstract class JsonValue<T> implements JsonEntity {
   private static final long serialVersionUID = -3315891098392786432L;
 
   protected T value;
+  private String typeName;
 
   /**
    * Creates a value.
    */
-  public JsonValue(T value) {
+  public JsonValue(T value, String typeName) {
     this.value = Objects.requireNonNull(value);
+    this.typeName = Objects.requireNonNull(typeName);
   }
 
   public T get() {
@@ -67,6 +69,11 @@ public abstract class JsonValue<T> implements JsonEntity {
     else if (!this.value.equals(other.value))
       return false;
     return true;
+  }
+
+  @Override
+  public final String getTypeName() {
+    return this.typeName;
   }
 
   /**

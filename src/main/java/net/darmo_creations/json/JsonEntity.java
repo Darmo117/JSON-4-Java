@@ -25,4 +25,9 @@ import java.io.Serializable;
  *
  * @author Damien Vergnet
  */
-public interface JsonEntity extends Serializable {}
+public interface JsonEntity extends Serializable {
+  /**
+   * Returns the name of this entity's type.
+   */
+  String getTypeName();
+}

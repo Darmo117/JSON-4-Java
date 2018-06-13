@@ -27,6 +27,6 @@ public final class JsonBoolean extends JsonValue<Boolean> {
   private static final long serialVersionUID = 7082720359306820854L;
 
   public JsonBoolean(Boolean value) {
-    super(value);
+    super(value, "boolean");
   }
 }

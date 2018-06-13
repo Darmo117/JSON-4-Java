@@ -20,6 +20,7 @@ package net.darmo_creations.json;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.StringJoiner;
 
 /**
@@ -52,9 +53,18 @@ public final class JsonObject extends HashMap<String, JsonEntity> implements Jso
    * @param type the object type into which the entity has to be cast
    * @return the entity to which the specified key is mapped, or null if this map contains no
    *         mapping for the key
+   * @throws NoSuchElementException if there is no mapping for the key
+   * @throws ClassCastException if the actual value is not assignable to the specified type
    */
   public <T extends JsonEntity> T getAs(String key, JsonEntityType<T> type) {
+    if (!containsKey(key))
+      throw new NoSuchElementException("No mapping for key '" + key + "'!");
     return type.getEntityClass().cast(get(key));
+  }
+
+  @Override
+  public String getTypeName() {
+    return "object";
   }
 
   /**

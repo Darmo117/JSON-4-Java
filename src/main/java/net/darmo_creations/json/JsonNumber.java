@@ -27,7 +27,7 @@ public final class JsonNumber extends JsonValue<Double> {
   private static final long serialVersionUID = 3006650913617176985L;
 
   public JsonNumber(Double value) {
-    super(value);
+    super(value, "number");
   }
 
   /**

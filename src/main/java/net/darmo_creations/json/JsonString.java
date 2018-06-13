@@ -30,7 +30,7 @@ public final class JsonString extends JsonValue<String> {
   private static final long serialVersionUID = -4540752717027411018L;
 
   public JsonString(String value) {
-    super(value);
+    super(value, "string");
   }
 
   /**
