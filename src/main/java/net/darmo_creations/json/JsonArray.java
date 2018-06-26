@@ -53,6 +53,7 @@ public final class JsonArray extends ArrayList<JsonEntity> implements JsonEntity
    *
    * @param index index of the element to return
    * @param type the object type into which the element has to be cast
+   * @param <T> type in which the result will be cast into
    * @return the element at the specified position in this array
    * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 or index ≥ size())
    * @throws ClassCastException if the actual value is not assignable to the specified type

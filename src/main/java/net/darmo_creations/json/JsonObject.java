@@ -54,6 +54,7 @@ public final class JsonObject extends HashMap<String, JsonEntity> implements Jso
    *
    * @param key the key whose associated value is to be returned
    * @param type the object type into which the entity has to be cast
+   * @param <T> type in which the result will be cast into
    * @return the entity to which the specified key is mapped
    * @throws NoSuchElementException if there is no mapping for the key
    * @throws ClassCastException if the actual value is not assignable to the specified type
